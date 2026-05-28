@@ -1,0 +1,1 @@
+struct TrustScore { let value: Double }

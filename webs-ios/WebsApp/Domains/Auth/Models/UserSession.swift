@@ -1,0 +1,1 @@
+struct UserSession: Equatable { let id: String }

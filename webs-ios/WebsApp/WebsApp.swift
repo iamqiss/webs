@@ -5,8 +5,12 @@ import ComposableArchitecture
 struct WebsApp: App {
     var body: some Scene {
         WindowGroup {
-            // TODO: inject store and route to RootView
-            RootView()
+            AppView(
+                store: Store(
+                    initialState: AppReducer.State(),
+                    reducer: { AppReducer() }
+                )
+            )
         }
     }
 }

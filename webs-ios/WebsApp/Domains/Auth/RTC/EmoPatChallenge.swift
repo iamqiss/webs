@@ -1,0 +1,1 @@
+struct EmoPatChallenge { static func generate() -> String { "x" } }
