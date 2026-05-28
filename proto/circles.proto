@@ -1,0 +1,48 @@
+syntax = "proto3";
+package webs.circles.v1;
+option java_package        = "app.webs.android.generated";
+option java_multiple_files = true;
+option swift_prefix        = "Webs";
+
+import "common.proto";
+import "google/protobuf/timestamp.proto";
+
+// Circles are created and managed by Webs only.
+// Users may join, leave, browse, and tag posts to Circles.
+service CirclesService {
+  rpc GetMyCircles   (webs.common.v1.Empty) returns (stream Circle);
+  rpc ExploreCircles (ExploreRequest)        returns (stream Circle);
+  rpc GetCircle      (GetCircleRequest)      returns (Circle);
+  rpc JoinCircle     (JoinRequest)           returns (JoinResponse);
+  rpc LeaveCircle    (LeaveRequest)          returns (webs.common.v1.Empty);
+  rpc GetCategories  (webs.common.v1.Empty)  returns (CategoriesResponse);
+}
+
+message Circle {
+  string                    id             = 1;
+  string                    name           = 2;
+  string                    description    = 3;
+  string                    category       = 4;
+  string                    avatar_url     = 5;
+  string                    banner_url     = 6;
+  int64                     members_count  = 7;
+  int64                     posts_count    = 8;
+  bool                      is_member      = 9;
+  google.protobuf.Timestamp created_at     = 10;
+}
+
+message ExploreRequest {
+  string                     category = 1;
+  webs.common.v1.PageRequest page     = 2;
+}
+
+message GetCircleRequest { string id        = 1; }
+message JoinRequest      { string circle_id = 1; }
+message LeaveRequest     { string circle_id = 1; }
+
+message JoinResponse {
+  bool  is_member     = 1;
+  int64 members_count = 2;
+}
+
+message CategoriesResponse { repeated string categories = 1; }

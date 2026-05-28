@@ -1,0 +1,43 @@
+syntax = "proto3";
+package webs.stories.v1;
+option java_package        = "app.webs.android.generated";
+option java_multiple_files = true;
+option swift_prefix        = "Webs";
+
+import "common.proto";
+import "google/protobuf/timestamp.proto";
+
+service StoriesService {
+  // Server-streaming — ordered story queue for the stories bar
+  rpc GetStoriesBar  (webs.common.v1.Empty)   returns (stream StoryGroup);
+  rpc GetUserStories (GetUserStoriesRequest)   returns (stream Story);
+  rpc PostStory      (PostStoryRequest)        returns (Story);
+  rpc DeleteStory    (DeleteStoryRequest)      returns (webs.common.v1.Empty);
+  rpc MarkSeen       (MarkSeenRequest)         returns (webs.common.v1.Empty);
+}
+
+message Story {
+  string                        id         = 1;
+  webs.common.v1.UserSummary    author     = 2;
+  webs.common.v1.MediaItem      media      = 3;
+  string                        text       = 4;
+  bool                          seen       = 5;
+  google.protobuf.Timestamp     created_at = 6;
+  google.protobuf.Timestamp     expires_at = 7; // 24h after creation
+}
+
+message StoryGroup {
+  webs.common.v1.UserSummary user       = 1;
+  int32                      count      = 2;
+  bool                       has_unseen = 3;
+}
+
+message GetUserStoriesRequest { string user_id = 1; }
+message DeleteStoryRequest    { string id      = 1; }
+message MarkSeenRequest       { string id      = 1; }
+
+message PostStoryRequest {
+  string                        media_url  = 1;
+  string                        text       = 2;
+  webs.common.v1.MediaType      media_type = 3;
+}

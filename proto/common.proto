@@ -1,0 +1,60 @@
+syntax = "proto3";
+package webs.common.v1;
+option java_package        = "app.webs.android.generated";
+option java_multiple_files = true;
+option swift_prefix        = "Webs";
+
+import "google/protobuf/timestamp.proto";
+
+// Pagination
+
+message PageRequest {
+  string cursor = 1; // opaque cursor from previous response
+  int32  limit  = 2; // max items; server may cap
+}
+
+message PageInfo {
+  string next_cursor = 1; // empty = end of feed
+  bool   has_more    = 2;
+}
+
+// Media
+
+message MediaItem {
+  string    url          = 1;
+  string    thumbnail    = 2;
+  MediaType type         = 3;
+  int32     width        = 4;
+  int32     height       = 5;
+  int32     duration_sec = 6; // video only
+}
+
+enum MediaType {
+  MEDIA_TYPE_UNSPECIFIED = 0;
+  MEDIA_TYPE_IMAGE       = 1;
+  MEDIA_TYPE_VIDEO       = 2;
+}
+
+// Embedded user summary (used inside posts, comments, activity, etc.)
+
+message UserSummary {
+  string id           = 1;
+  string username     = 2;
+  string display_name = 3;
+  string avatar_url   = 4;
+  bool   verified     = 5;
+}
+
+// Reactions
+
+message ReactionCounts {
+  int64 likes     = 1;
+  int64 dislikes  = 2;
+  int64 comments  = 3;
+  int64 reshares  = 4;
+  int64 bookmarks = 5;
+}
+
+// Empty placeholder
+
+message Empty {}

@@ -1,0 +1,66 @@
+syntax = "proto3";
+package webs.messages.v1;
+option java_package        = "app.webs.android.generated";
+option java_multiple_files = true;
+option swift_prefix        = "Webs";
+
+import "common.proto";
+import "google/protobuf/timestamp.proto";
+
+service MessagesService {
+  rpc GetInbox           (webs.common.v1.Empty)   returns (stream Conversation);
+  // Bidirectional — real-time chat with typing indicators and read receipts
+  rpc StreamConversation (stream ChatEvent)        returns (stream ChatEvent);
+  rpc CreateConversation (CreateConversationRequest) returns (Conversation);
+  rpc SendMessage        (SendMessageRequest)      returns (Message);
+  rpc DeleteMessage      (DeleteMessageRequest)    returns (webs.common.v1.Empty);
+  rpc MarkRead           (MarkReadRequest)         returns (webs.common.v1.Empty);
+}
+
+message Conversation {
+  string                              id            = 1;
+  repeated webs.common.v1.UserSummary participants  = 2;
+  Message                             last_message  = 3;
+  int32                               unread_count  = 4;
+  bool                                is_group      = 5;
+  string                              group_name    = 6;
+  string                              group_avatar  = 7;
+  google.protobuf.Timestamp           updated_at    = 8;
+}
+
+message Message {
+  string                            id              = 1;
+  string                            conversation_id = 2;
+  webs.common.v1.UserSummary        sender          = 3;
+  string                            body            = 4;
+  repeated webs.common.v1.MediaItem media           = 5;
+  bool                              read            = 6;
+  google.protobuf.Timestamp         created_at      = 7;
+}
+
+message ChatEvent {
+  oneof event {
+    Message      new_message = 1;
+    TypingEvent  typing      = 2;
+    ReadEvent    read        = 3;
+    string       delete_id   = 4;
+  }
+}
+
+message TypingEvent { string user_id = 1; bool typing = 2; }
+message ReadEvent   { string message_id = 1; string user_id = 2; }
+
+message CreateConversationRequest {
+  repeated string participant_ids = 1;
+  bool            is_group        = 2;
+  string          group_name      = 3;
+}
+
+message SendMessageRequest {
+  string          conversation_id = 1;
+  string          body            = 2;
+  repeated string media_urls      = 3;
+}
+
+message DeleteMessageRequest { string id              = 1; }
+message MarkReadRequest      { string conversation_id = 1; string up_to_message_id = 2; }

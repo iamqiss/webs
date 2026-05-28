@@ -1,0 +1,55 @@
+syntax = "proto3";
+package webs.spins.v1;
+option java_package        = "app.webs.android.generated";
+option java_multiple_files = true;
+option swift_prefix        = "Webs";
+
+import "common.proto";
+import "google/protobuf/timestamp.proto";
+
+service SpinsService {
+  // Bidirectional — client sends scroll events; server preloads next Spins
+  rpc StreamSpins  (stream SpinScrollEvent) returns (stream SpinBatch);
+  rpc UploadSpin   (UploadSpinRequest)       returns (Spin);
+  rpc DeleteSpin   (DeleteSpinRequest)       returns (webs.common.v1.Empty);
+  rpc ReactToSpin  (SpinReactRequest)        returns (webs.common.v1.ReactionCounts);
+  rpc GetUserSpins (GetUserSpinsRequest)     returns (stream Spin);
+}
+
+message Spin {
+  string                        id           = 1;
+  webs.common.v1.UserSummary    author       = 2;
+  string                        caption      = 3;
+  string                        video_url    = 4;
+  string                        thumbnail    = 5;
+  int32                         duration_sec = 6;
+  string                        circle_id    = 7;
+  string                        audio_title  = 8;
+  webs.common.v1.ReactionCounts reactions    = 9;
+  google.protobuf.Timestamp     created_at   = 10;
+}
+
+message SpinScrollEvent {
+  string current_spin_id = 1;
+  bool   finished        = 2; // watched to end
+}
+
+message SpinBatch        { repeated Spin spins = 1; }
+message DeleteSpinRequest { string id          = 1; }
+
+message UploadSpinRequest {
+  string caption     = 1;
+  string video_url   = 2; // pre-signed object storage URL
+  string circle_id   = 3;
+  string audio_title = 4;
+}
+
+message SpinReactRequest {
+  string                        id        = 1;
+  webs.common.v1.ReactionCounts reactions = 2;
+}
+
+message GetUserSpinsRequest {
+  string                     user_id = 1;
+  webs.common.v1.PageRequest page    = 2;
+}

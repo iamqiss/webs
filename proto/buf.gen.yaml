@@ -1,0 +1,29 @@
+version: v2
+plugins:
+  # Rust (tonic / prost)
+  - remote: buf.build/community/neoeinstein-prost
+    out: ../webs-server/src/generated
+    opt:
+      - file_descriptor_set=false
+
+  - remote: buf.build/community/neoeinstein-tonic
+    out: ../webs-server/src/generated
+    opt:
+      - compile_well_known_types=true
+      - extern_path=.google.protobuf=::pbjson_types
+
+  # Swift (grpc-swift / swift-protobuf)
+  - remote: buf.build/grpc/swift
+    out: ../webs-ios/WebsApp/Generated
+
+  - remote: buf.build/apple/swift
+    out: ../webs-ios/WebsApp/Generated
+
+  # Kotlin (grpc-kotlin / protobuf-kotlin-lite)
+  - remote: buf.build/grpc/kotlin
+    out: ../webs-android/app/src/main/kotlin/app/webs/android/generated
+
+  - remote: buf.build/protocolbuffers/kotlin
+    out: ../webs-android/app/src/main/kotlin/app/webs/android/generated
+    opt:
+      - lite

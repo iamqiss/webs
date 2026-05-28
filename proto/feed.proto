@@ -1,0 +1,38 @@
+syntax = "proto3";
+package webs.feed.v1;
+option java_package        = "app.webs.android.generated";
+option java_multiple_files = true;
+option swift_prefix        = "Webs";
+
+import "common.proto";
+import "post.proto";
+
+service FeedService {
+  // Server-streaming — new Webs pushed as they arrive
+  rpc StreamForYou     (FeedRequest)      returns (stream FeedEvent);
+  rpc StreamFollowing  (FeedRequest)      returns (stream FeedEvent);
+  rpc StreamTrending   (FeedRequest)      returns (stream FeedEvent);
+  rpc StreamCircleFeed (CircleFeedRequest) returns (stream FeedEvent);
+}
+
+message FeedRequest {
+  webs.common.v1.PageRequest page = 1;
+}
+
+message CircleFeedRequest {
+  string                     circle_id = 1;
+  webs.common.v1.PageRequest page      = 2;
+}
+
+message FeedEvent {
+  oneof event {
+    webs.post.v1.Post new_post  = 1;
+    string            delete_id = 2; // post removed — drop from local feed
+    FeedPage          page      = 3; // initial page burst
+  }
+}
+
+message FeedPage {
+  repeated webs.post.v1.Post posts = 1;
+  webs.common.v1.PageInfo    page  = 2;
+}

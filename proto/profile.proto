@@ -1,0 +1,60 @@
+syntax = "proto3";
+package webs.profile.v1;
+option java_package        = "app.webs.android.generated";
+option java_multiple_files = true;
+option swift_prefix        = "Webs";
+
+import "common.proto";
+import "google/protobuf/timestamp.proto";
+
+service ProfileService {
+  rpc GetProfile    (GetProfileRequest)    returns (Profile);
+  rpc UpdateProfile (UpdateProfileRequest) returns (Profile);
+  rpc Follow        (FollowRequest)        returns (FollowResponse);
+  rpc GetFollowers  (GetFollowRequest)     returns (stream webs.common.v1.UserSummary);
+  rpc GetFollowing  (GetFollowRequest)     returns (stream webs.common.v1.UserSummary);
+  rpc BlockUser     (BlockRequest)         returns (webs.common.v1.Empty);
+  rpc ReportUser    (ReportRequest)        returns (webs.common.v1.Empty);
+}
+
+message Profile {
+  string                    id              = 1;
+  string                    username        = 2;
+  string                    display_name    = 3;
+  string                    bio             = 4;
+  string                    avatar_url      = 5;
+  string                    banner_url      = 6;
+  bool                      verified        = 7;
+  int64                     followers_count = 8;
+  int64                     following_count = 9;
+  bool                      is_following    = 10;
+  bool                      follows_you     = 11;
+  google.protobuf.Timestamp joined_at       = 12;
+}
+
+message GetProfileRequest { string user_id = 1; }
+
+message UpdateProfileRequest {
+  string display_name = 1;
+  string bio          = 2;
+  string avatar_url   = 3;
+  string banner_url   = 4;
+}
+
+message FollowRequest {
+  string user_id = 1;
+  bool   follow  = 2;
+}
+
+message FollowResponse {
+  bool  is_following    = 1;
+  int64 followers_count = 2;
+}
+
+message GetFollowRequest {
+  string                     user_id = 1;
+  webs.common.v1.PageRequest page    = 2;
+}
+
+message BlockRequest  { string user_id = 1; bool block  = 2; }
+message ReportRequest { string user_id = 1; string reason = 2; }

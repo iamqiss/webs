@@ -1,0 +1,47 @@
+syntax = "proto3";
+package webs.search.v1;
+option java_package        = "app.webs.android.generated";
+option java_multiple_files = true;
+option swift_prefix        = "Webs";
+
+import "common.proto";
+import "post.proto";
+
+service SearchService {
+  rpc Search         (SearchRequest)      returns (SearchResponse);
+  rpc SearchPeople   (SearchRequest)      returns (stream webs.common.v1.UserSummary);
+  rpc Trending       (TrendingRequest)    returns (TrendingResponse);
+  rpc GetSuggestions (SuggestionsRequest) returns (SuggestionsResponse);
+}
+
+message SearchRequest {
+  string                     query  = 1;
+  SearchFilter               filter = 2;
+  webs.common.v1.PageRequest page   = 3;
+}
+
+enum SearchFilter {
+  SEARCH_FILTER_ALL    = 0;
+  SEARCH_FILTER_POSTS  = 1;
+  SEARCH_FILTER_PEOPLE = 2;
+  SEARCH_FILTER_TOPICS = 3;
+  SEARCH_FILTER_MEDIA  = 4;
+}
+
+message SearchResponse {
+  repeated webs.common.v1.UserSummary people = 1;
+  repeated webs.post.v1.Post          posts  = 2;
+  repeated TopicResult                topics = 3;
+  webs.common.v1.PageInfo             page   = 4;
+}
+
+message TopicResult {
+  string topic      = 1;
+  int64  post_count = 2;
+  string category   = 3;
+}
+
+message TrendingRequest    { string category = 1; }
+message TrendingResponse   { repeated TopicResult topics = 1; }
+message SuggestionsRequest { webs.common.v1.PageRequest page = 1; }
+message SuggestionsResponse { repeated webs.common.v1.UserSummary users = 1; }

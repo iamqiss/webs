@@ -1,0 +1,78 @@
+syntax = "proto3";
+package webs.post.v1;
+option java_package        = "app.webs.android.generated";
+option java_multiple_files = true;
+option swift_prefix        = "Webs";
+
+import "common.proto";
+import "google/protobuf/timestamp.proto";
+
+service PostService {
+  rpc CreatePost    (CreatePostRequest)    returns (Post);
+  rpc GetPost       (GetPostRequest)       returns (Post);
+  rpc DeletePost    (DeletePostRequest)    returns (webs.common.v1.Empty);
+  rpc ReactToPost   (ReactRequest)         returns (webs.common.v1.ReactionCounts);
+  rpc BookmarkPost  (BookmarkRequest)      returns (webs.common.v1.Empty);
+  rpc ResharePost   (ReshareRequest)       returns (Post);
+  rpc GetComments   (GetCommentsRequest)   returns (stream Comment);
+  rpc AddComment    (AddCommentRequest)    returns (Comment);
+  rpc DeleteComment (DeleteCommentRequest) returns (webs.common.v1.Empty);
+}
+
+message Post {
+  string                            id          = 1;
+  webs.common.v1.UserSummary        author      = 2;
+  string                            body        = 3;
+  repeated webs.common.v1.MediaItem media       = 4;
+  string                            circle_id   = 5;
+  string                            category    = 6;
+  webs.common.v1.ReactionCounts     reactions   = 7;
+  bool                              bookmarked  = 8;
+  bool                              reshared    = 9;
+  string                            reshare_of  = 10;
+  google.protobuf.Timestamp         created_at  = 11;
+}
+
+message Comment {
+  string                            id          = 1;
+  webs.common.v1.UserSummary        author      = 2;
+  string                            body        = 3;
+  repeated webs.common.v1.MediaItem media       = 4;
+  webs.common.v1.ReactionCounts     reactions   = 5;
+  google.protobuf.Timestamp         created_at  = 6;
+}
+
+message CreatePostRequest {
+  string          body       = 1;
+  repeated string media_urls = 2;
+  string          circle_id  = 3;
+  string          category   = 4;
+}
+
+message GetPostRequest       { string id      = 1; }
+message DeletePostRequest    { string id      = 1; }
+message BookmarkRequest      { string post_id = 1; bool bookmark = 2; }
+message ReshareRequest       { string post_id = 1; string comment = 2; }
+message DeleteCommentRequest { string id      = 1; }
+
+message ReactRequest {
+  string       post_id  = 1;
+  ReactionType reaction = 2;
+}
+
+enum ReactionType {
+  REACTION_UNSPECIFIED = 0;
+  REACTION_LIKE        = 1;
+  REACTION_DISLIKE     = 2;
+}
+
+message GetCommentsRequest {
+  string                     post_id = 1;
+  webs.common.v1.PageRequest page    = 2;
+}
+
+message AddCommentRequest {
+  string          post_id    = 1;
+  string          body       = 2;
+  repeated string media_urls = 3;
+}

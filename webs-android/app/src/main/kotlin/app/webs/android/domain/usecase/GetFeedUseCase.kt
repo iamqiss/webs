@@ -1,0 +1,2 @@
+package app.webs.android.domain.usecase
+// TODO: GetFeedUseCase

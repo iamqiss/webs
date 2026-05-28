@@ -1,0 +1,1 @@
+-- TODO: SurrealDB schema migration — 006_messages.surql

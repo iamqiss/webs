@@ -1,0 +1,40 @@
+syntax = "proto3";
+package webs.activity.v1;
+option java_package        = "app.webs.android.generated";
+option java_multiple_files = true;
+option swift_prefix        = "Webs";
+
+import "common.proto";
+import "google/protobuf/timestamp.proto";
+
+service ActivityService {
+  // Server-streaming — activity items pushed in real time
+  rpc StreamActivity (ActivityRequest)          returns (stream ActivityItem);
+  rpc MarkAllRead    (webs.common.v1.Empty)     returns (webs.common.v1.Empty);
+  rpc MarkRead       (MarkActivityReadRequest)  returns (webs.common.v1.Empty);
+}
+
+message ActivityItem {
+  string                        id         = 1;
+  ActivityType                  type       = 2;
+  webs.common.v1.UserSummary    actor      = 3;
+  string                        target_id  = 4; // post, spin, or comment id
+  string                        preview    = 5; // short content snippet
+  string                        media_url  = 6; // optional thumbnail
+  bool                          read       = 7;
+  google.protobuf.Timestamp     created_at = 8;
+}
+
+enum ActivityType {
+  ACTIVITY_UNSPECIFIED = 0;
+  ACTIVITY_LIKE        = 1;
+  ACTIVITY_DISLIKE     = 2;
+  ACTIVITY_COMMENT     = 3;
+  ACTIVITY_RESHARE     = 4;
+  ACTIVITY_FOLLOW      = 5;
+  ACTIVITY_MENTION     = 6;
+  ACTIVITY_REPLY       = 7;
+}
+
+message ActivityRequest       { webs.common.v1.PageRequest page = 1; }
+message MarkActivityReadRequest { repeated string ids            = 1; }
