@@ -17,8 +17,6 @@
     <img src="https://img.shields.io/badge/License-Proprietary-blue?style=for-the-badge" alt="License" />
   </a>
   <a href="https://github.com/iamqiss/webs">
-    <img src="https://img.shields.io/github/stars/iamqiss/webs?style=for-the-badge" alt="Stars" />
-  </a>
   <img src="https://img.shields.io/badge/Status-Active%20Development-orange?style=for-the-badge" alt="Status" />
 </p>
 ---
