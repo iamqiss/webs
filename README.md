@@ -1,260 +1,466 @@
-# 🕸 Webs
+# <p align="center">
+#   <img src="./webs-ios/Webs/Assets.xcassets/AppIcon.appiconset/Icon-1024.png" width="120" />
+# </p>
 
-> **Proprietary and Confidential**
-> Copyright © 2026 Webs. All rights reserved.
+<h1 align="center">🕸 Webs</h1>
+
+<p align="center">
+  <b>Post a Web. Watch a Spin. Join a Circle.</b><br/>
+  A next-generation social platform built for speed, identity, and realtime interaction.
+</p>
+
+---
+
+> **Proprietary and Confidential**  
+> Copyright © 2026 Webs. All rights reserved.  
 > Unauthorized copying, distribution, modification, or use of this software, in whole or in part, is strictly prohibited.
 
 ---
 
-Webs is a next-generation social platform built for speed, community, and expression. Post a **Web**. Watch a **Spin**. Join a **Circle**. Connect with people around what actually matters to you — without the noise.
+# ✨ What is Webs?
 
-This is the official monorepo housing all core components of the Webs platform.
+Webs is a next-generation social platform engineered around:
 
----
+- ⚡ realtime streaming
+- 🧠 intelligent identity
+- 📡 offline-first architecture
+- 🛡 behavioral trust systems
+- 🦀 Rust-powered infrastructure
+- 📱 truly native mobile apps
 
-## 📦 Monorepo Structure
-
-```
-webs/
-├── webs-server/       # Backend — Rust + SurrealDB + gRPC
-├── webs-ios/          # iOS client — SwiftUI
-├── webs-android/      # Android client — Jetpack Compose
-├── proto/             # Shared Protobuf definitions (gRPC contracts)
-├── docs/              # Architecture decisions, API specs, internal docs
-└── README.md
-```
+Unlike traditional social platforms built on aging REST architectures, Webs is designed from the ground up for modern mobile interaction.
 
 ---
 
-## ✨ What is Webs?
-
-Webs is a social platform designed from the ground up with three principles:
-
-- **Speed first** — sub-100ms interactions, gRPC streaming, zero compromise
-- **Offline first** — your feed, profile, and drafts are available without a connection
-- **Platform integrity** — Circles are curated by Webs, not the chaos of user-created groups
-
-### Core Concepts
+# 🌐 Core Concepts
 
 | Concept | Description |
 |---|---|
-| **Web** | A post. Text, images, or links. To post is to *web*. |
-| **Spin** | Short-form video content. The Webs equivalent of Reels. |
-| **Circle** | A curated interest community, created and maintained by Webs. Users can join, tag posts to, and explore Circles — but not create them. |
-| **Stories** | Ephemeral 24-hour content, surfaced at the top of the Home feed. |
+| **Web** | A post. Text, media, links, or thoughts. |
+| **Spin** | Short-form vertical video content. |
+| **Circle** | A platform-curated interest community. |
+| **Story** | Ephemeral 24-hour content. |
+| **WID** | Webs Identifier — internal cryptographic account identity. |
+| **RTC** | Real-Time Challenge trust system. |
+| **EmoPat** | Behavioral emoji-pattern verification layer. |
 
 ---
 
-## 🏗️ Tech Stack
+# 🧠 Philosophy
 
-### Server — `webs-server`
+Webs is built around five principles:
 
-| Layer | Technology |
+| Principle | Description |
 |---|---|
-| Language | **Rust** |
-| Database | **SurrealDB** |
-| API Protocol | **gRPC** (tonic) with bidirectional streaming |
-| Auth | JWT + refresh token rotation |
-| Media | Object storage (S3-compatible) |
-| Search | SurrealDB full-text search |
-| Runtime | Tokio async runtime |
-
-Rust + SurrealDB + gRPC is not an arbitrary choice. This stack is estimated to reduce infrastructure costs by **~80%** compared to traditional Node/Go + PostgreSQL + REST architectures at equivalent scale, owing to:
-
-- Rust's near-zero memory overhead and fearless concurrency
-- SurrealDB's multi-model nature eliminating the need for separate graph, relational, and document stores
-- gRPC's binary framing (Protocol Buffers) dramatically reducing payload sizes vs JSON REST
-- Streaming connections replacing expensive polling patterns
-
-### iOS — `webs-ios`
-
-| Layer | Technology |
-|---|---|
-| Language | **Swift** |
-| UI Framework | **SwiftUI** |
-| Networking | **gRPC-Swift** |
-| Local Storage | **SwiftData** (offline-first) |
-| Media Playback | **AVFoundation** |
-| Architecture | **TCA (The Composable Architecture)** |
-
-The iOS app is built to feel unmistakably Apple — following Human Interface Guidelines, leveraging native gestures, and using platform APIs wherever possible. No cross-platform compromise.
-
-### Android — `webs-android`
-
-| Layer | Technology |
-|---|---|
-| Language | **Kotlin** |
-| UI Framework | **Jetpack Compose** |
-| Networking | **gRPC-Kotlin** |
-| Local Storage | **Room** (offline-first) |
-| Media Playback | **Media3 / ExoPlayer** |
-| Architecture | **MVI + ViewModel** |
-
-The Android app is built to feel unmistakably Google — following Material You guidelines, supporting dynamic color theming, and respecting Android's back stack and lifecycle natively. No half-measures.
+| **Speed First** | Everything should feel instant. |
+| **Offline First** | The app remains usable without internet. |
+| **Human Identity** | People search naturally using names, not handles. |
+| **Behavioral Trust** | Trust is earned through interaction patterns. |
+| **Platform Integrity** | Communities are intentionally curated. |
 
 ---
 
-## 🔌 gRPC & Shared Protobuf
+# 🔐 Identity System
 
-All client-server communication is defined in `/proto` and shared across all three packages. This is the single source of truth for the Webs API contract.
+Webs does not rely on usernames as primary identity.
 
-```
+Every account is assigned a cryptographic identifier called a:
+
+# WID — Webs Identifier
+
+Example:
+
+```text
+wid:webs:7QX9M2A4D8K1P
+
+Users primarily interact using:
+
+- names
+- profile context
+- social proximity
+- mutuals
+- circles
+- relevance
+- interaction history
+
+Usernames remain optional for:
+
+- mentions
+- creators
+- vanity handles
+- sharing
+
+---
+
+🔎 Intelligent Search
+
+Webs search is not simple text matching.
+
+It combines:
+
+- SurrealDB indexing
+- graph relationships
+- behavioral relevance
+- Circle affinity
+- mutual connections
+- proximity weighting
+- contextual ranking
+
+Searching for people should feel human:
+
+John Doe
+Neo Qiss
+Sarah from Sandton
+Mike from university
+
+—not like querying a database table.
+
+---
+
+🛡 RTC — Real-Time Challenge System
+
+Webs replaces traditional CAPTCHAs with:
+
+RTC — Real-Time Challenges
+
+RTC silently monitors behavioral telemetry across the app:
+
+- typing cadence
+- gesture timing
+- touch entropy
+- navigation patterns
+- interaction pacing
+- scrolling behavior
+- session variance
+
+Most users never encounter RTC.
+
+If suspicious behavior is detected, lightweight verification activates dynamically.
+
+---
+
+😀 EmoPat — Behavioral Verification
+
+EmoPat is Webs' behavioral verification system.
+
+Instead of:
+
+- distorted text
+- traffic lights
+- image CAPTCHAs
+
+Users solve lightweight emoji interaction challenges:
+
+- reverse sequences
+- memory recall
+- category grouping
+- pattern continuation
+- spatial recognition
+
+RTC evaluates:
+
+- tap intervals
+- gesture entropy
+- timing variance
+- interaction consistency
+
+This makes verification:
+
+- faster for humans
+- difficult for bots
+- mobile-native
+- friction-light
+
+---
+
+🏗 Monorepo Structure
+
+webs/
+├── webs-server/        # Rust backend
+├── webs-ios/           # Native iOS app
+├── webs-android/       # Native Android app
+├── proto/              # Shared protobuf contracts
+├── docs/               # Internal architecture docs
+└── README.md
+
+---
+
+🦀 Backend — "webs-server"
+
+Layer| Technology
+Language| Rust
+Runtime| Tokio
+API| gRPC (tonic)
+Database| SurrealDB
+Streaming| Iggy
+Object Storage| S3-compatible
+Search| Intelligent ranking pipeline
+Auth| JWT + refresh rotation
+
+---
+
+⚙ Backend Architecture
+
+Clients
+   ↓
+gRPC Gateway
+   ↓
+Application Services
+   ↓
+Domain Layer
+   ↓
+Iggy Event Bus
+   ↓
+Workers / Pipelines
+   ↓
+SurrealDB + Object Storage
+
+---
+
+📡 Streaming-First Infrastructure
+
+Webs heavily uses streaming instead of polling.
+
+Feature| Pattern
+Feed| Server streaming
+Messages| Bidirectional streaming
+Spins| Buffered realtime streaming
+Notifications| Persistent streaming
+RTC telemetry| Background streaming
+Presence| Event streaming
+
+---
+
+📦 Event-Driven Design
+
+Webs uses Iggy as its internal streaming backbone.
+
+auth.events
+feed.events
+message.events
+spin.events
+rtc.events
+search.events
+notification.events
+moderation.events
+analytics.events
+
+This architecture enables:
+
+- realtime fanout
+- async workers
+- ranking pipelines
+- moderation queues
+- analytics ingestion
+- scalable feed generation
+
+---
+
+🍎 iOS — "webs-ios"
+
+Layer| Technology
+Language| Swift
+UI| SwiftUI
+Networking| gRPC-Swift
+Local Storage| SwiftData
+Media| AVFoundation
+Architecture| TCA
+
+Built to feel unmistakably Apple.
+
+---
+
+🤖 Android — "webs-android"
+
+Layer| Technology
+Language| Kotlin
+UI| Jetpack Compose
+Networking| gRPC-Kotlin
+Local Storage| Room
+Media| Media3 / ExoPlayer
+Architecture| MVI
+
+Built to feel unmistakably Android.
+
+---
+
+🌙 Offline-First
+
+Webs remains usable without internet connectivity.
+
+Locally cached:
+
+- feeds
+- profiles
+- circles
+- messages
+- drafts
+- stories
+- reactions
+
+Sync reconciliation occurs automatically when connectivity returns.
+
+---
+
+🔵 Circles
+
+Circles are platform-curated communities.
+
+Users cannot create Circles.
+
+This prevents:
+
+- fragmentation
+- spam ecosystems
+- duplicate groups
+- abandoned communities
+
+Users can:
+
+- join Circles
+- browse Circle feeds
+- discover communities
+- tag Webs to Circles
+
+---
+
+🚀 Performance Goals
+
+Metric| Goal
+Feed latency| <100ms
+Cold start| <1.5s
+Streaming reconnect| <500ms
+Scroll performance| 120fps-capable
+Memory overhead| Minimal
+
+---
+
+🔌 Shared Protobuf Contracts
+
 proto/
-├── auth.proto         # Authentication & sessions
-├── feed.proto         # Home feed, For You, Following, Trending
-├── post.proto         # Webs (posts) — create, read, react, share
-├── spins.proto        # Spin upload, streaming, engagement
-├── profile.proto      # User profiles, follow graph
-├── circles.proto      # Circle discovery, membership, feeds
-├── stories.proto      # Story upload & viewing
-├── messages.proto     # Direct messages & group threads
+├── auth.proto
+├── feed.proto
+├── post.proto
+├── spins.proto
+├── profile.proto
+├── circles.proto
+├── stories.proto
+├── messages.proto
 ├── notifications.proto
-└── search.proto
-```
-
-Key streaming patterns:
-- **Feed** uses server-side streaming — new Webs pushed as they arrive
-- **Spins** uses bidirectional streaming for buffered preloading
-- **Messages** uses bidirectional streaming for real-time chat
-- **Stories** uses server-side streaming for ordered playback queues
+├── rtc.proto
+├── search.proto
+└── telemetry.proto
 
 ---
 
-## 📡 Offline-First Architecture
+🔒 Security
 
-Webs is designed to remain usable without a network connection.
+Webs uses:
 
-### iOS
-- Feed, profiles, and Circles are cached via **SwiftData** with TTL-based invalidation
-- Draft Webs and Spins are queued locally and synced on reconnect
-- Optimistic UI updates for reactions and follows — rolled back gracefully on failure
+- Argon2id passphrase hashing
+- refresh token rotation
+- encrypted gRPC transport
+- RTC trust scoring
+- behavioral verification
+- signed upload URLs
+- server-side trust enforcement
 
-### Android
-- Feed and profile data persisted in **Room** with a clean repository layer abstracting local vs remote
-- WorkManager handles background sync and upload queuing
-- Offline indicator surfaced subtly in the UI without blocking interaction
+Passwords are not required.
 
----
+Users authenticate using:
 
-## 🧭 Navigation Structure
-
-Webs uses a floating bottom navigation bar with five items:
-
-```
-[ Home ]  [ Discover ]  [ Spins ]  [ Circles ]  [ Profile ]
-```
-
-- The **＋ (Compose)** button floats above the nav bar, animated — it rises slightly on scroll up and retreats on scroll down
-- **Spins** tab launches a full-screen vertical video feed
-- **Circles** tab shows joined Circles and an Explore view for discovering new ones
+- generated passphrases
+- custom passphrases
+- device trust
+- session continuity
 
 ---
 
-## 👤 Profile
+🚀 Getting Started
 
-The profile screen surfaces what matters:
+Requirements
 
-- **Followers** and **Following** counts only — no post count, no Circle count
-- Two content tabs: **Webs** and **Spins**
-- Own profile shows **Edit Profile** button
-- Other profiles show **Follow** and **Message** buttons
-- Verified badge displayed inline with display name
-
----
-
-## 🔵 Circles — Platform-Curated Communities
-
-Circles on Webs are **not user-created**. They are created, named, and maintained by the Webs platform team. This is an intentional product decision:
-
-- Eliminates fragmentation, duplicate communities, and low-quality groups
-- Ensures every Circle has a clear identity and content standard
-- Users can **join**, **tag their Webs** to a Circle, **browse** Circle feeds, and **be discovered** through Circles
-- Gives Webs full editorial control over community taxonomy
+- Rust >= 1.78
+- SurrealDB >= 2.0
+- protoc
+- buf
+- Xcode >= 16
+- Android Studio Koala+
 
 ---
 
-## 🚀 Getting Started
+Clone
 
-### Prerequisites
-
-- Rust `>=1.78` with `cargo`
-- SurrealDB `>=2.0`
-- Xcode `>=16` (iOS)
-- Android Studio Koala or later (Android)
-- `protoc` — Protocol Buffer compiler
-- `buf` — Protobuf linting and generation (recommended)
-
-### Clone
-
-```bash
 git clone https://github.com/your-org/webs.git
 cd webs
-```
 
-### Server
+---
 
-```bash
+Server
+
 cd webs-server
-cp .env.example .env          # Configure DB, secrets, storage
+
+cp .env.example .env
+
 cargo build --release
 cargo run
-```
 
-### iOS
+---
 
-```bash
+iOS
+
 cd webs-ios
+
 open Webs.xcodeproj
-# Select target device and run
-```
 
-### Android
+---
 
-```bash
+Android
+
 cd webs-android
-# Open in Android Studio and sync Gradle
+
 ./gradlew assembleDebug
-```
 
-### Regenerate Protobuf
+---
 
-```bash
+Generate Protobufs
+
 cd proto
+
 buf generate
-```
-
-This outputs generated Swift and Kotlin stubs into `webs-ios/Generated/` and `webs-android/generated/` respectively.
 
 ---
 
-## 🗂️ Key Conventions
+📋 Roadmap
 
-- **Branch naming**: `feature/`, `fix/`, `chore/`, `proto/`
-- **Commit style**: Conventional Commits (`feat:`, `fix:`, `refactor:`, etc.)
-- **Proto changes**: Always discussed before merging — breaking changes require a version bump
-- **No shared UI code** between iOS and Android — both apps are native-first, built to feel like they belong on their platform
-
----
-
-## 📋 Roadmap Highlights
-
-- [ ] Core feed, profile, and Webs (post) flow
-- [ ] Spins — upload, playback, and For You ranking
-- [ ] Stories — ephemeral 24h content
-- [ ] Circles — curated discovery and feeds
-- [ ] Direct Messages — 1:1 and group threads
-- [ ] Notifications — push + in-app
-- [ ] Search — people, topics, Circles, Webs
-- [ ] Verified accounts and trust signals
-- [ ] Content moderation tooling (internal)
-- [ ] Analytics & creator insights
+- [ ] Feed & profile systems
+- [ ] Realtime messaging
+- [ ] Spins recommendation pipeline
+- [ ] Stories
+- [ ] RTC rollout
+- [ ] Search engine v1
+- [ ] Creator verification
+- [ ] Moderation dashboard
+- [ ] Analytics platform
+- [ ] Adaptive ranking systems
 
 ---
 
-## 🔒 License
+🔒 License
 
-**Proprietary. All rights reserved.**
+Proprietary. All rights reserved.
 
-This software and all associated source code, documentation, and assets are the exclusive property of Webs. No part of this repository may be copied, modified, distributed, sublicensed, or used in any form without explicit written permission from the owners.
+Webs and all associated code, systems, infrastructure, designs, assets, and documentation are proprietary intellectual property.
 
-See [`LICENSE`](./LICENSE) for full terms.
+No permission is granted to:
+
+- copy
+- redistribute
+- sublicense
+- fork
+- modify
+- commercially exploit
+
+without explicit written authorization.
+
+See ""LICENSE"" (./LICENSE) for full terms.
