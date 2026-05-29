@@ -9,6 +9,18 @@
   A next-generation social platform built for speed, identity, and realtime interaction.
 </p>
 
+<p align="center">
+  <a href="https://www.rust-lang.org">
+    <img src="https://img.shields.io/badge/Rust-000000?style=for-the-badge&logo=rust&logoColor=white" alt="Rust" />
+  </a>
+  <a href="https://github.com/iamqiss/webs/blob/main/LICENSE">
+    <img src="https://img.shields.io/badge/License-Proprietary-blue?style=for-the-badge" alt="License" />
+  </a>
+  <a href="https://github.com/iamqiss/webs">
+    <img src="https://img.shields.io/github/stars/iamqiss/webs?style=for-the-badge" alt="Stars" />
+  </a>
+  <img src="https://img.shields.io/badge/Status-Active%20Development-orange?style=for-the-badge" alt="Status" />
+</p>
 ---
 
 > **Proprietary and Confidential**  
