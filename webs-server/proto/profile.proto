@@ -1,0 +1,6 @@
+syntax = "proto3";
+package webs.profile;
+service ProfileService {
+  rpc Get(Empty) returns (Empty);
+}
+message Empty {}

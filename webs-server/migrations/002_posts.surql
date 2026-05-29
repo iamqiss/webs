@@ -1,1 +1,0 @@
--- TODO: SurrealDB schema migration — 002_posts.surql

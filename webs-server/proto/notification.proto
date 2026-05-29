@@ -1,0 +1,6 @@
+syntax = "proto3";
+package webs.notification;
+service NotificationService {
+  rpc Get(Empty) returns (Empty);
+}
+message Empty {}

@@ -1,0 +1,8 @@
+version: "3.9"
+services:
+  surrealdb:
+    image: surrealdb/surrealdb:latest
+    ports: ["8000:8000"]
+  iggy:
+    image: iggyrs/iggy:latest
+    ports: ["8090:8090"]

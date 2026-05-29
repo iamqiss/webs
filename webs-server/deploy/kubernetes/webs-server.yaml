@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webs-server
+
+spec:
+  replicas: 3
+
+  selector:
+    matchLabels:
+      app: webs-server
+
+  template:
+    metadata:
+      labels:
+        app: webs-server
+
+    spec:
+      containers:
+        - name: webs-server
+          image: webs/server:latest
+          ports:
+            - containerPort: 8080

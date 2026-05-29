@@ -1,0 +1,6 @@
+syntax = "proto3";
+package webs.messaging;
+service MessagingService {
+  rpc Get(Empty) returns (Empty);
+}
+message Empty {}

@@ -1,0 +1,6 @@
+syntax = "proto3";
+package webs.search;
+service SearchService {
+  rpc Get(Empty) returns (Empty);
+}
+message Empty {}

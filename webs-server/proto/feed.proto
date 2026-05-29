@@ -1,0 +1,6 @@
+syntax = "proto3";
+package webs.feed;
+service FeedService {
+  rpc Get(Empty) returns (Empty);
+}
+message Empty {}

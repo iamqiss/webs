@@ -1,1 +1,0 @@
--- TODO: SurrealDB schema migration — 008_follows.surql

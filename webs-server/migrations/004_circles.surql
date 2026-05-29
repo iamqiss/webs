@@ -1,1 +1,0 @@
--- TODO: SurrealDB schema migration — 004_circles.surql
